@@ -18,6 +18,10 @@
 		tampilTipehiburan();
 		tampilJenisreklame();
 		tampilJenis();
+
+		// pendataan
+		tampilHotel();
+
 		<?php
 		if ($this->session->flashdata('msg') != '') {
 			echo "effect_msg();";
@@ -1070,5 +1074,21 @@
 		$('.form-msg').html('');
 	})
 
+	// pendataan hotel 
+	function tampilHotel() {
+		$.get('<?php echo base_url('Pendataan/tampil_hotel'); ?>', function(data) {
+			MyTable.fnDestroy();
+			$('#data-hotel').html(data);
+			refresh();
+		});
+	}
+
+	function tampilTipekamar() {
+		$.get('<?php echo base_url('Pendataan/tampil_detail_hotel'); ?>', function(data) {
+			MyTable.fnDestroy();
+			$('#data-tipekamar').html(data);
+			refresh();
+		});
+	}
 	
 </script>

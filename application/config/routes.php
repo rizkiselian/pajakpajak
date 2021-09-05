@@ -13,5 +13,8 @@ $route['tipe-hiburan'] = 'master/tipehiburan/';
 $route['jenis-reklame'] = 'master/jenisreklame/';
 $route['jenis'] = 'master/jenis/';
 
+$route['pendataan-hotel'] = 'pendataan/hotel/';
+$route['pendataan-hotel-detail/([.0-9a-zA-Z-]+)'] = 'pendataan/detail_hotel/$1';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -18,7 +18,7 @@
 
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
-      <li class="header">LIST MENU</li>
+      <!-- <li class="header">LIST MENU</li> -->
       <!-- Optionally, you can add icons to the links -->
 
       <li <?php if ($page == 'home') {echo 'class="active"';} ?>>
@@ -64,46 +64,38 @@
 
         </ul>
       </li>
-      
-      <!-- <li <?php if ($page == 'pegawai') {echo 'class="active"';} ?>>
-        <a href="<?php echo base_url('Pegawai'); ?>">
-          <i class="fa fa-user"></i>
-          <span>Data Pegawai</span>
-        </a>
-      </li> -->
-<!-- 
-      <li <?php if ($page == 'merek') {echo 'class="active"';} ?>>
-        <a href="<?php echo base_url('Merek'); ?>">
-          <i class="fa fa-user"></i>
-          <span>Merek Kendaraan</span>
-        </a>
-      </li>
-
-      <li <?php if ($page == 'jenis_kendaraan') {echo 'class="active"';} ?>>
-        <a href="<?php echo base_url('Jenis-Kendaraan'); ?>">
-          <i class="fa fa-user"></i>
-          <span>Jenis Kendaraan</span>
-        </a>
-      </li>
-
-      <li <?php if ($page == 'posisi') {echo 'class="active"';} ?>>
-        <a href="<?php echo base_url('Posisi'); ?>">
-          <i class="fa fa-briefcase"></i>
-          <span>Data Posisi</span>
-        </a>
-      </li>
-      
-      <li <?php if ($page == 'kota') {echo 'class="active"';} ?>>
-        <a href="<?php echo base_url('Kota'); ?>">
-          <i class="fa fa-location-arrow"></i>
-          <span>Data Kota</span>
-        </a>
-      </li> -->
-
-      
 
     </ul>
     <!-- /.sidebar-menu -->
+
+    <!-- Sidebar Menu -->
+    <ul class="sidebar-menu">
+      <li class="header">PENDATAAN</li>
+
+      <li class="treeview <?php if($page=='Pendataan'){echo "active";} ?>">
+        <a href="">
+          <i class="glyphicon glyphicon-th-list"></i> 
+          <span>Pendataan Pajak (SA)</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+
+          <li <?php if($subpage=='Pendataan Hotel'){echo "class=\"active\"";} ?>>
+            <a href="<?php echo base_url(); ?>pendataan-hotel/"><i class="fa fa-angle-right"></i> Pajak Hotel</a>
+          </li>
+
+          <li <?php if($subpage=='Pendataan Restoran'){echo "class=\"active\"";} ?>>
+            <a href="<?php echo base_url(); ?>pendataan-restoran/"><i class="fa fa-angle-right"></i> Pajak Restoran</a>
+          </li>
+
+        </ul>
+      </li>
+
+    </ul>
+    <!-- /.sidebar-menu -->
+
   </section>
   <!-- /.sidebar -->
 </aside>
