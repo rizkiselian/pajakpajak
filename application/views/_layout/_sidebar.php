@@ -61,6 +61,34 @@
           <li <?php if($subpage=='Jenis'){echo "class=\"active\"";} ?>>
             <a href="<?php echo base_url(); ?>jenis"><i class="fa fa-angle-right"></i> Jenis</a>
           </li>
+          <li <?php if($subpage=='Status Kepemilikan'){echo "class=\"active\"";} ?>>
+            <a href="<?php echo base_url(); ?>status-kepemilikan"><i class="fa fa-angle-right"></i> Status Kepemilikan</a>
+          </li>
+          <li <?php if($subpage=='Status Usaha'){echo "class=\"active\"";} ?>>
+            <a href="<?php echo base_url(); ?>status-usaha"><i class="fa fa-angle-right"></i> Status Usaha</a>
+          </li>
+
+        </ul>
+      </li>
+
+    <li class="treeview <?php if($page=='Data Wajib Pajak'){echo "active";} ?>">
+        <a href="">
+          <i class="fa fa-book"></i> 
+          <span>Data Wajib Pajak</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li <?php if($subpage=='Perusahaan'){echo "class=\"active\"";} ?>>
+            <a href="<?php echo base_url(); ?>perusahan/"><i class="fa fa-angle-right"></i> Perusahaan</a>
+          </li>
+          <li <?php if($subpage=='Izin Usaha'){echo "class=\"active\"";} ?>>
+            <a href="<?php echo base_url(); ?>izin-usaha"><i class="fa fa-angle-right"></i> Izin Usaha</a>
+          </li>
+          <li <?php if($subpage=='WPP'){echo "class=\"active\"";} ?>>
+            <a href="<?php echo base_url(); ?>wpp"><i class="fa fa-angle-right"></i> Wajib Pajak Perorangan</a>
+          </li>
 
         </ul>
       </li>
