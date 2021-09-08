@@ -77,6 +77,12 @@ class M_master extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function get_status_kepemilikan(){
+		$this->db->order_by('id ASC');
+		$query = $this->db->get('tbl_status_kepemilikan');
+		return $query->result_array();
+	}
+
 	public function get_kategori(){
 		$query = $this->db->get('tbl_kategori');
 		return $query->result_array();
@@ -146,6 +152,14 @@ class M_master extends CI_Model {
 		return $data->row();
 	}
 
+	public function select_by_id_status_kepemilikan($id) {
+		$sql = "SELECT * FROM tbl_status_kepemilikan WHERE id = '{$id}'";
+
+		$data = $this->db->query($sql);
+
+		return $data->row();
+	}
+
 	public function select_by_posisi($id) {
 		$sql = "SELECT COUNT(*) AS jml FROM pegawai WHERE id_posisi = {$id}";
 
@@ -202,6 +216,14 @@ class M_master extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
+	public function updateStatuskepemilikan($data) {
+		$sql = "UPDATE tbl_status_kepemilikan SET nama_kepemilikan ='" .$data['statuskepemilikan'] ."' WHERE id='" .$data['id'] ."'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+
 	public function deleteKlasifikasi($id) {
 		$sql = "DELETE FROM tbl_klasifikasi WHERE id='" .$id ."'";
 
@@ -236,6 +258,14 @@ class M_master extends CI_Model {
 
 	public function deleteJenis($id) {
 		$sql = "DELETE FROM tbl_jenis WHERE id='" .$id ."'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+
+	public function deleteStatuskepemilikan($id) {
+		$sql = "DELETE FROM tbl_status_kepemilikan WHERE id='" .$id ."'";
 
 		$this->db->query($sql);
 
@@ -281,6 +311,15 @@ class M_master extends CI_Model {
 	public function insertJenis($data) {
 		// $id = md5(DATE('ymdhms').rand());
 		$sql = "INSERT INTO tbl_jenis VALUES('','" .$data['nama_jenis'] ."','" .$data['id_kategori'] ."','')";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+
+	public function insertStatuskepemilikan($data) {
+		// $id = md5(DATE('ymdhms').rand());
+		$sql = "INSERT INTO tbl_status_kepemilikan VALUES('','" .$data['statuskepemilikan'] ."')";
 
 		$this->db->query($sql);
 

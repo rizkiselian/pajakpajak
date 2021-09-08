@@ -503,6 +503,92 @@ class Master extends AUTH_Controller {
 		}
 	}
 
+	public function statuskepemilikan() {
+		$data['userdata'] = $this->userdata;
+
+		$data['page'] = "Master";
+		$data['subpage'] = "Status Kepemilikan";
+		$data['judul'] = "Data Status Kepemilikan";
+		$data['deskripsi'] = "Manage Data Status Kepemilikan";
+
+		$data['modal_tambah_status_kepemilikan'] = show_my_modal('master/modals/modal_tambah_status_kepemilikan', 'tambah-status-kepemilikan', $data);
+
+		$this->template->views('master/status_kepemilikan/home', $data);
+	}
+
+	public function tampilStatuskepemilikan() {
+		// $data['dataStatuskepemilikan'] = $this->M_master->get_data('tbl_kategori', "id ASC");
+		$data['dataStatuskepemilikan'] = $this->M_master->get_status_kepemilikan();
+		
+		$this->load->view('master/status_kepemilikan/list_data', $data);
+	}
+
+	public function prosesTambahStatuskepemilikan() {
+		$this->form_validation->set_rules('statuskepemilikan', 'Status Kepemilikan', 'trim|required');
+		$this->form_validation->set_message('required', '%s tidak boleh kosong');
+
+		$data = $this->input->post();
+		if ($this->form_validation->run() == TRUE) {
+			$result = $this->M_master->insertStatuskepemilikan($data);
+
+			if ($result > 0) {
+				$out['status'] = '';
+				$out['msg'] = show_succ_msg('Data Status Kepemilikan Berhasil ditambahkan', '20px');
+			} else {
+				$out['status'] = '';
+				$out['msg'] = show_err_msg('Data Status Kepemilikan Gagal ditambahkan', '20px');
+			}
+		} else {
+			$out['status'] = 'form';
+			$out['msg'] = show_err_msg(validation_errors());
+		}
+
+		echo json_encode($out);
+	}
+
+	public function updateStatuskepemilikan() {
+		$id = trim($_POST['id']);
+
+		$data['dataStatuskepemilikan'] = $this->M_master->select_by_id_status_kepemilikan($id);
+		$data['userdata'] = $this->userdata;
+
+		echo show_my_modal('master/modals/modal_update_status_kepemilikan', 'update-status-kepemilikan', $data);
+	}
+
+	public function prosesUpdateStatuskepemilikan() {
+		$this->form_validation->set_rules('statuskepemilikan', 'Status Kepemilikan', 'trim|required');
+		$this->form_validation->set_message('required', '%s tidak boleh kosong');
+
+		$data = $this->input->post();
+		if ($this->form_validation->run() == TRUE) {
+			$result = $this->M_master->updateStatuskepemilikan($data);
+
+			if ($result > 0) {
+				$out['status'] = '';
+				$out['msg'] = show_succ_msg('Data Status Kepemilikan Berhasil diupdate', '20px');
+			} else {
+				$out['status'] = '';
+				$out['msg'] = show_err_msg('Data Status Kepemilikan Gagal diupdate', '20px');
+			}
+		} else {
+			$out['status'] = 'form';
+			$out['msg'] = show_err_msg(validation_errors());
+		}
+
+		echo json_encode($out);
+	}
+
+	public function deleteStatuskepemilikan() {
+		$id = $_POST['id'];
+		$result = $this->M_master->deleteStatuskepemilikan($id);
+
+		if ($result > 0) {
+			echo show_succ_msg('Data Status Kepemilikan Berhasil dihapus', '20px');
+		} else {
+			echo show_err_msg('Data Status Kepemilikan Gagal dihapus', '20px');
+		}
+	}
+
 
 
 }

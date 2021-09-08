@@ -18,6 +18,7 @@
 		tampilTipehiburan();
 		tampilJenisreklame();
 		tampilJenis();
+		tampilStatuskepemilikan();
 
 		// pendataan
 		tampilHotel();
@@ -1074,7 +1075,112 @@
 		$('.form-msg').html('');
 	})
 
-	// pendataan hotel 
+		// Status Kepemilikan 
+	function tampilStatuskepemilikan() {
+		$.get('<?php echo base_url('Master/tampilStatuskepemilikan'); ?>', function(data) {
+			MyTable.fnDestroy();
+			$('#data-status-kepemilikan').html(data);
+			refresh();
+		});
+	}
+	
+	var id_status_kepemilikan;
+	$(document).on("click", ".konfirmasiHapus-statuskepemilikan", function() {
+		id_status_kepemilikan = $(this).attr("data-id");
+	})
+	$(document).on("click", ".hapus-dataStatuskepemilikan", function() {
+		var id = id_status_kepemilikan;
+		
+		$.ajax({
+			method: "POST",
+			url: "<?php echo base_url('Master/deleteStatuskepemilikan'); ?>",
+			data: "id=" +id
+		})
+		.done(function(data) {
+			$('#konfirmasiHapus').modal('hide');
+			tampilStatuskepemilikan();
+			$('.msg').html(data);
+			effect_msg();
+		})
+	})
+
+	$(document).on("click", ".update-dataStatuskepemilikan", function() {
+		var id = $(this).attr("data-id");
+		
+		$.ajax({
+			method: "POST",
+			url: "<?php echo base_url('Master/updateStatuskepemilikan'); ?>",
+			data: "id=" +id
+		})
+		.done(function(data) {
+			$('#tempat-modal').html(data);
+			$('#update-status-kepemilikan').modal('show');
+		})
+	})
+
+	$('#form-tambah-status-kepemilikan').submit(function(e) {
+		var data = $(this).serialize();
+
+		$.ajax({
+			method: 'POST',
+			url: '<?php echo base_url('Master/prosesTambahStatuskepemilikan'); ?>',
+			data: data
+		})
+		.done(function(data) {
+			var out = jQuery.parseJSON(data);
+
+			tampilStatuskepemilikan();
+			if (out.status == 'form') {
+				$('.form-msg').html(out.msg);
+				effect_msg_form();
+			} else {
+				document.getElementById("form-tambah-status-kepemilikan").reset();
+				$('#tambah-status-kepemilikan').modal('hide');
+				$('.msg').html(out.msg);
+				effect_msg();
+				$("#btn-tambah").attr("disabled", true);
+			}			
+		})
+		
+		e.preventDefault();
+	});
+
+	$(document).on('submit', '#form-update-status-kepemilikan', function(e){
+		var data = $(this).serialize();
+		
+		$.ajax({
+			method: 'POST',
+			url: '<?php echo base_url('Master/prosesUpdateStatuskepemilikan'); ?>',
+			data: data
+		})
+		.done(function(data) {
+			var out = jQuery.parseJSON(data);
+
+			tampilStatuskepemilikan();
+			if (out.status == 'form') {
+				$('.form-msg').html(out.msg);
+				effect_msg_form();
+			} else {
+				document.getElementById("form-update-status-kepemilikan").reset();
+				$('#update-status-kepemilikan').modal('hide');
+				$('.msg').html(out.msg);
+				effect_msg();
+				$("#btn-edit").attr("disabled", true);
+			}
+		})
+		
+		e.preventDefault();
+	});
+
+	$('#tambah-status-kepemilikan').on('hidden.bs.modal', function () {
+		$('.form-msg').html('');
+	})
+
+	$('#update-status-kepemilikan').on('hidden.bs.modal', function () {
+		$('.form-msg').html('');
+	})
+
+	// --------------------- pendataan -----------------------
 	function tampilHotel() {
 		$.get('<?php echo base_url('Pendataan/tampil_hotel'); ?>', function(data) {
 			MyTable.fnDestroy();
@@ -1090,5 +1196,7 @@
 			refresh();
 		});
 	}
-	
+
+
+
 </script>
