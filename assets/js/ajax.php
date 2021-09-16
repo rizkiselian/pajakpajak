@@ -1189,13 +1189,13 @@
 		});
 	}
 
-	function tampilTipekamar() {
-		$.get('<?php echo base_url('Pendataan/tampil_detail_hotel'); ?>', function(data) {
-			MyTable.fnDestroy();
-			$('#data-tipekamar').html(data);
-			refresh();
-		});
-	}
+	// function tampilTipekamar() {
+	// 	$.get('<?php echo base_url('Pendataan/tampil_detail_hotel'); ?>', function(data) {
+	// 		MyTable.fnDestroy();
+	// 		$('#data-tipekamar').html(data);
+	// 		refresh();
+	// 	});
+	// }
 
 
 

@@ -517,7 +517,6 @@ class Master extends AUTH_Controller {
 	}
 
 	public function tampilStatuskepemilikan() {
-		// $data['dataStatuskepemilikan'] = $this->M_master->get_data('tbl_kategori', "id ASC");
 		$data['dataStatuskepemilikan'] = $this->M_master->get_status_kepemilikan();
 		
 		$this->load->view('master/status_kepemilikan/list_data', $data);
