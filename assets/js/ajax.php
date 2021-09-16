@@ -19,6 +19,8 @@
 		tampilJenisreklame();
 		tampilJenis();
 		tampilStatuskepemilikan();
+		tampilStatususaha();
+		tampilPerusahaan();
 
 		// pendataan
 		tampilHotel();
@@ -1177,6 +1179,238 @@
 	})
 
 	$('#update-status-kepemilikan').on('hidden.bs.modal', function () {
+		$('.form-msg').html('');
+	})
+
+	// Status usaha
+	function tampilStatususaha() {
+		$.get('<?php echo base_url('Master/tampilStatususaha'); ?>', function(data) {
+			MyTable.fnDestroy();
+			$('#data-status-usaha').html(data);
+			refresh();
+		});
+	}
+	
+	var id_status_usaha;
+	$(document).on("click", ".konfirmasiHapus-statususaha", function() {
+		id_status_usaha = $(this).attr("data-id");
+	})
+	$(document).on("click", ".hapus-dataStatususaha", function() {
+		var id = id_status_usaha;
+		
+		$.ajax({
+			method: "POST",
+			url: "<?php echo base_url('Master/deleteStatususaha'); ?>",
+			data: "id=" +id
+		})
+		.done(function(data) {
+			$('#konfirmasiHapus').modal('hide');
+			tampilStatususaha();
+			$('.msg').html(data);
+			effect_msg();
+		})
+	})
+
+	$(document).on("click", ".update-dataStatususaha", function() {
+		var id = $(this).attr("data-id");
+		
+		$.ajax({
+			method: "POST",
+			url: "<?php echo base_url('Master/updateStatususaha'); ?>",
+			data: "id=" +id
+		})
+		.done(function(data) {
+			$('#tempat-modal').html(data);
+			$('#update-status-usaha').modal('show');
+		})
+	})
+
+	$('#form-tambah-status-usaha').submit(function(e) {
+		var data = $(this).serialize();
+
+		$.ajax({
+			method: 'POST',
+			url: '<?php echo base_url('Master/prosesTambahStatususaha'); ?>',
+			data: data
+		})
+		.done(function(data) {
+			var out = jQuery.parseJSON(data);
+
+			tampilStatususaha();
+			if (out.status == 'form') {
+				$('.form-msg').html(out.msg);
+				effect_msg_form();
+			} else {
+				document.getElementById("form-tambah-status-usaha").reset();
+				$('#tambah-status-usaha').modal('hide');
+				$('.msg').html(out.msg);
+				effect_msg();
+				$("#btn-tambah").attr("disabled", true);
+			}			
+		})
+		
+		e.preventDefault();
+	});
+
+	$(document).on('submit', '#form-update-status-usaha', function(e){
+		var data = $(this).serialize();
+		
+		$.ajax({
+			method: 'POST',
+			url: '<?php echo base_url('Master/prosesUpdateStatususaha'); ?>',
+			data: data
+		})
+		.done(function(data) {
+			var out = jQuery.parseJSON(data);
+
+			tampilStatususaha();
+			if (out.status == 'form') {
+				$('.form-msg').html(out.msg);
+				effect_msg_form();
+			} else {
+				document.getElementById("form-update-status-usaha").reset();
+				$('#update-status-usaha').modal('hide');
+				$('.msg').html(out.msg);
+				effect_msg();
+				$("#btn-edit").attr("disabled", true);
+			}
+		})
+		
+		e.preventDefault();
+	});
+
+	$('#tambah-status-usaha').on('hidden.bs.modal', function () {
+		$('.form-msg').html('');
+	})
+
+	$('#update-status-usaha').on('hidden.bs.modal', function () {
+		$('.form-msg').html('');
+	})
+
+	// Perusahaan
+	function tampilPerusahaan() {
+		$.get('<?php echo base_url('Perusahaan/tampilPerusahaan'); ?>', function(data) {
+			MyTable.fnDestroy();
+			$('#data-perusahaan').html(data);
+			refresh();
+		});
+	}
+	
+	var id_perusahaan;
+	$(document).on("click", ".konfirmasiHapus-perusahaan", function() {
+		id_perusahaan = $(this).attr("data-id");
+	})
+	$(document).on("click", ".hapus-dataPerusahaan", function() {
+		var id = id_perusahaan;
+		
+		$.ajax({
+			method: "POST",
+			url: "<?php echo base_url('Perusahaan/deletePerusahaan'); ?>",
+			data: "id=" +id
+		})
+		.done(function(data) {
+			$('#konfirmasiHapus').modal('hide');
+			tampilPerusahaan();
+			$('.msg').html(data);
+			effect_msg();
+		})
+	})
+
+	$(document).on("click", ".update-dataPerusahaan", function() {
+		var id = $(this).attr("data-id");
+		
+		$.ajax({
+			method: "POST",
+			url: "<?php echo base_url('Perusahaan/updatePerusahaan'); ?>",
+			data: "id=" +id
+		})
+		.done(function(data) {
+			$('#tempat-modal').html(data);
+			$('#update-perusahaan').modal('show');
+		})
+	})
+
+	$(document).on("click", ".detail-dataPerusahaan", function() {
+		var id = $(this).attr("data-id");
+		
+		$.ajax({
+			method: "POST",
+			url: "<?php echo base_url('Perusahaan/detailPerusahaan'); ?>",
+			data: "id=" +id
+		})
+		.done(function(data) {
+			$('#tempat-modal').html(data);
+			$('#tabel-detail').dataTable({
+				"paging": true,
+				"lengthChange": false,
+				"searching": true,
+				"ordering": true,
+				"info": true,
+				"autoWidth": false
+			});
+			$('#detail-perusahaan').modal('show');
+		})
+	})
+
+	$('#form-tambah-perusahaan').submit(function(e) {
+		var data = $(this).serialize();
+
+		$.ajax({
+			method: 'POST',
+			url: '<?php echo base_url('Perusahaan/prosesTambahPerusahaan'); ?>',
+			data: data
+		})
+		.done(function(data) {
+			var out = jQuery.parseJSON(data);
+
+			tampilPerusahaan();
+			if (out.status == 'form') {
+				$('.form-msg').html(out.msg);
+				effect_msg_form();
+			} else {
+				document.getElementById("form-tambah-perusahaan").reset();
+				$('#tambah-perusahaan').modal('hide');
+				$('.msg').html(out.msg);
+				effect_msg();
+				$("#btn-tambah").attr("disabled", true);
+			}			
+		})
+		
+		e.preventDefault();
+	});
+
+	$(document).on('submit', '#form-update-perusahaan', function(e){
+		var data = $(this).serialize();
+		
+		$.ajax({
+			method: 'POST',
+			url: '<?php echo base_url('Perusahaan/prosesUpdatePerusahaan'); ?>',
+			data: data
+		})
+		.done(function(data) {
+			var out = jQuery.parseJSON(data);
+
+			tampilPerusahaan();
+			if (out.status == 'form') {
+				$('.form-msg').html(out.msg);
+				effect_msg_form();
+			} else {
+				document.getElementById("form-update-perusahaan").reset();
+				$('#update-perusahaan').modal('hide');
+				$('.msg').html(out.msg);
+				effect_msg();
+				$("#btn-edit").attr("disabled", true);
+			}
+		})
+		
+		e.preventDefault();
+	});
+
+	$('#tambah-perusahaan').on('hidden.bs.modal', function () {
+		$('.form-msg').html('');
+	})
+
+	$('#update-perusahaan').on('hidden.bs.modal', function () {
 		$('.form-msg').html('');
 	})
 

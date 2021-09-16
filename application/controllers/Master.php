@@ -19,7 +19,7 @@ class Master extends AUTH_Controller {
 
 	public function tampil_kecamatan() {
 		$id_labusel = 1222;
-		$data['dataKecamatan'] = $this->M_master->get_id('kecamatan', $id_labusel, "id_kecamatan ASC");
+		$data['dataKecamatan'] = $this->M_master->get_id_kecamatan('kecamatan', $id_labusel);
 		$this->load->view('master/kecamatan/list_data', $data);
 	}
 
@@ -50,13 +50,13 @@ class Master extends AUTH_Controller {
 	}
 
 	public function tampil_kategori() {
-		$data['dataKategori'] = $this->M_master->get_data('tbl_kategori', "id ASC");
+		$data['dataKategori'] = $this->M_master->get('tbl_kategori', "id ASC");
 		$this->load->view('master/kategori/list_data', $data);
 	}
 
 	public function klasifikasi() {
 		$data['userdata'] = $this->userdata;
-		$data['dataKategori'] = $this->M_master->select_all_kategori();
+		$data['dataKategori'] = $this->M_master->get_klasifikasi();
 
 		$data['page'] = "Master";
 		$data['subpage'] = "Klasifikasi";
@@ -148,7 +148,6 @@ class Master extends AUTH_Controller {
 
 	public function tipekamar() {
 		$data['userdata'] = $this->userdata;
-		// $data['dataTipe_kamar'] = $this->M_master->select_all_kategori();
 
 		$data['page'] = "Master";
 		$data['subpage'] = "Tipekamar";
@@ -195,9 +194,11 @@ class Master extends AUTH_Controller {
 	}
 
 	public function updateTipekamar() {
+
+		$tbl = 'tbl_tipe_kamar';
 		$id = trim($_POST['id']);
 
-		$data['dataTipekamar'] = $this->M_master->select_by_id_tipekamar($id);
+		$data['dataTipekamar'] = $this->M_master->get_id($tbl, $id);
 		$data['userdata'] = $this->userdata;
 
 		echo show_my_modal('master/modals/modal_update_tipekamar', 'update-tipekamar', $data);
@@ -292,9 +293,10 @@ class Master extends AUTH_Controller {
 	}
 
 	public function updateTipehiburan() {
+		$tbl = 'tbl_tipe_hiburan';
 		$id = trim($_POST['id']);
 
-		$data['dataTipehiburan'] = $this->M_master->select_by_id_tipehiburan($id);
+		$data['dataTipehiburan'] = $this->M_master->get_id($tbl, $id);
 		$data['userdata'] = $this->userdata;
 
 		echo show_my_modal('master/modals/modal_update_tipehiburan', 'update-tipehiburan', $data);
@@ -389,9 +391,10 @@ class Master extends AUTH_Controller {
 	}
 
 	public function updateJenisreklame() {
+		$tbl = 'tbl_jenis_reklame';
 		$id = trim($_POST['id']);
 
-		$data['dataJenisreklame'] = $this->M_master->select_by_id_jenisreklame($id);
+		$data['dataJenisreklame'] = $this->M_master->get_id($tbl, $id);
 		$data['userdata'] = $this->userdata;
 
 		echo show_my_modal('master/modals/modal_update_jenisreklame', 'update-jenisreklame', $data);
@@ -439,7 +442,7 @@ class Master extends AUTH_Controller {
 
 	public function jenis() {
 		$data['userdata'] = $this->userdata;
-		$data['dataKategori'] = $this->M_master->get_data('tbl_kategori', "id ASC");
+		$data['dataKategori'] = $this->M_master->get('tbl_kategori', 'id ASC');
 
 		$data['page'] = "Master";
 		$data['subpage'] = "Jenis";
@@ -454,7 +457,7 @@ class Master extends AUTH_Controller {
 	public function tampilJenis() {
 		$tbl = 'tbl_jenis';
 		$orderby = 'id ASC';
-		$data['dataJenis'] = $this->M_master->get($tbl, $orderby);
+		$data['dataJenis'] = $this->M_master->get_jenis($tbl, $orderby);
 		$this->load->view('master/jenis/list_data', $data);
 	}
 
@@ -484,10 +487,10 @@ class Master extends AUTH_Controller {
 	}
 
 	public function updateJenis() {
+		$tbl = 'tbl_jenis';
 		$id = trim($_POST['id']);
-
-		$data['dataJenis'] = $this->M_master->select_by_id_jenis($id);
-		$data['dataKategori'] = $this->M_master->select_all_kategori();
+		$data['dataJenis'] = $this->M_master->get_id($tbl, $id);
+		$data['dataKategori'] = $this->M_master->get_data('tbl_kategori');
 		$data['userdata'] = $this->userdata;
 
 		echo show_my_modal('master/modals/modal_update_jenis', 'update-jenis', $data);
@@ -545,18 +548,20 @@ class Master extends AUTH_Controller {
 	}
 
 	public function tampilStatuskepemilikan() {
-		$data['dataStatuskepemilikan'] = $this->M_master->get_status_kepemilikan();
-		
+		$tbl = 'tbl_status_kepemilikan';
+		$orderby = 'id ASC';
+		$data['dataStatuskepemilikan'] = $this->M_master->get($tbl, $orderby);
 		$this->load->view('master/status_kepemilikan/list_data', $data);
 	}
 
 	public function prosesTambahStatuskepemilikan() {
-		$this->form_validation->set_rules('statuskepemilikan', 'Status Kepemilikan', 'trim|required');
+		$this->form_validation->set_rules('nama_kepemilikan', 'Status Kepemilikan', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_status_kepemilikan';
 		$data = $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->insertStatuskepemilikan($data);
+			$result = $this->M_master->insert($tbl, $data);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -576,19 +581,21 @@ class Master extends AUTH_Controller {
 	public function updateStatuskepemilikan() {
 		$id = trim($_POST['id']);
 
-		$data['dataStatuskepemilikan'] = $this->M_master->select_by_id_status_kepemilikan($id);
+		$data['dataStatuskepemilikan'] = $this->M_master->get_id('tbl_status_kepemilikan', $id);
 		$data['userdata'] = $this->userdata;
 
 		echo show_my_modal('master/modals/modal_update_status_kepemilikan', 'update-status-kepemilikan', $data);
 	}
 
 	public function prosesUpdateStatuskepemilikan() {
-		$this->form_validation->set_rules('statuskepemilikan', 'Status Kepemilikan', 'trim|required');
+		$this->form_validation->set_rules('nama_kepemilikan', 'Status Kepemilikan', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_status_kepemilikan';
 		$data = $this->input->post();
+		$id = $this->input->post('id');
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->updateStatuskepemilikan($data);
+			$result = $this->M_master->update($tbl, $data, $id);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -607,7 +614,7 @@ class Master extends AUTH_Controller {
 
 	public function deleteStatuskepemilikan() {
 		$id = $_POST['id'];
-		$result = $this->M_master->deleteStatuskepemilikan($id);
+		$result = $this->M_master->delete('tbl_status_kepemilikan', $id);
 
 		if ($result > 0) {
 			echo show_succ_msg('Data Status Kepemilikan Berhasil dihapus', '20px');
@@ -616,6 +623,93 @@ class Master extends AUTH_Controller {
 		}
 	}
 
+	public function statususaha() {
+		$data['userdata'] = $this->userdata;
 
+		$data['page'] = "Master";
+		$data['subpage'] = "Status Usaha";
+		$data['judul'] = "Data Status Usaha";
+		$data['deskripsi'] = "Manage Data Status Usaha";
+
+		$data['modal_tambah_status_usaha'] = show_my_modal('master/modals/modal_tambah_status_usaha', 'tambah-status-usaha', $data);
+
+		$this->template->views('master/status_usaha/home', $data);
+	}
+
+	public function tampilStatususaha() {
+		$tbl = 'tbl_status_usaha';
+		$orderby = 'id ASC';
+		$data['dataStatususaha'] = $this->M_master->get($tbl, $orderby);
+		$this->load->view('master/status_usaha/list_data', $data);
+	}
+
+	public function prosesTambahStatususaha() {
+		$this->form_validation->set_rules('nama_usaha', 'Status Usaha', 'trim|required');
+		$this->form_validation->set_message('required', '%s tidak boleh kosong');
+
+		$tbl = 'tbl_status_usaha';
+		$data = $this->input->post();
+		if ($this->form_validation->run() == TRUE) {
+			$result = $this->M_master->insert($tbl, $data);
+
+			if ($result > 0) {
+				$out['status'] = '';
+				$out['msg'] = show_succ_msg('Data Status Usaha Berhasil ditambahkan', '20px');
+			} else {
+				$out['status'] = '';
+				$out['msg'] = show_err_msg('Data Status Usaha Gagal ditambahkan', '20px');
+			}
+		} else {
+			$out['status'] = 'form';
+			$out['msg'] = show_err_msg(validation_errors());
+		}
+
+		echo json_encode($out);
+	}
+
+	public function updateStatususaha() {
+		$id = trim($_POST['id']);
+
+		$data['dataStatususaha'] = $this->M_master->get_id('tbl_status_usaha', $id);
+		$data['userdata'] = $this->userdata;
+
+		echo show_my_modal('master/modals/modal_update_status_usaha', 'update-status-usaha', $data);
+	}
+
+	public function prosesUpdateStatususaha() {
+		$this->form_validation->set_rules('nama_usaha', 'Status Usaha', 'trim|required');
+		$this->form_validation->set_message('required', '%s tidak boleh kosong');
+
+		$tbl = 'tbl_status_usaha';
+		$data = $this->input->post();
+		$id = $this->input->post('id');
+		if ($this->form_validation->run() == TRUE) {
+			$result = $this->M_master->update($tbl, $data, $id);
+
+			if ($result > 0) {
+				$out['status'] = '';
+				$out['msg'] = show_succ_msg('Data Status Usaha Berhasil diupdate', '20px');
+			} else {
+				$out['status'] = '';
+				$out['msg'] = show_err_msg('Data Status usaha Gagal diupdate', '20px');
+			}
+		} else {
+			$out['status'] = 'form';
+			$out['msg'] = show_err_msg(validation_errors());
+		}
+
+		echo json_encode($out);
+	}
+
+	public function deleteStatususaha() {
+		$id = $_POST['id'];
+		$result = $this->M_master->delete('tbl_status_usaha', $id);
+
+		if ($result > 0) {
+			echo show_succ_msg('Data Status Usaha Berhasil dihapus', '20px');
+		} else {
+			echo show_err_msg('Data Status usaha Gagal dihapus', '20px');
+		}
+	}
 
 }

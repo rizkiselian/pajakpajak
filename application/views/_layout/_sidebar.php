@@ -71,7 +71,7 @@
         </ul>
       </li>
 
-    <li class="treeview <?php if($page=='Data Wajib Pajak'){echo "active";} ?>">
+    <li class="treeview <?php if($page=='data_wajib_pajak'){echo "active";} ?>">
         <a href="">
           <i class="fa fa-book"></i> 
           <span>Data Wajib Pajak</span>
@@ -81,7 +81,7 @@
         </a>
         <ul class="treeview-menu">
           <li <?php if($subpage=='Perusahaan'){echo "class=\"active\"";} ?>>
-            <a href="<?php echo base_url(); ?>perusahan/"><i class="fa fa-angle-right"></i> Perusahaan</a>
+            <a href="<?php echo base_url(); ?>Perusahaan/"><i class="fa fa-angle-right"></i> Perusahaan</a>
           </li>
           <li <?php if($subpage=='Izin Usaha'){echo "class=\"active\"";} ?>>
             <a href="<?php echo base_url(); ?>izin-usaha"><i class="fa fa-angle-right"></i> Izin Usaha</a>
