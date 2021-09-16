@@ -78,9 +78,10 @@ class Master extends AUTH_Controller {
 		$this->form_validation->set_rules('id_kategori', 'Kategori', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_klasifikasi';
 		$data = $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->insertKlasifikasi($data);
+			$result = $this->M_master->insert($tbl, $data);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -112,9 +113,11 @@ class Master extends AUTH_Controller {
 		$this->form_validation->set_rules('id_kategori', 'Kategori', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_klasifikasi';
 		$data = $this->input->post();
+		$id = $this->input->post('id');
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->updateKlasifikasi($data);
+			$result = $this->M_master->update($tbl, $data, $id);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -132,8 +135,9 @@ class Master extends AUTH_Controller {
 	}
 
 	public function deleteKlasifikasi() {
+		$tbl = 'tbl_klasifikasi';
 		$id = $_POST['id'];
-		$result = $this->M_master->deleteKlasifikasi($id);
+		$result = $this->M_master->delete($tbl, $id);
 
 		if ($result > 0) {
 			echo show_succ_msg('Data Klasifikasi Berhasil dihapus', '20px');
@@ -157,7 +161,9 @@ class Master extends AUTH_Controller {
 	}
 
 	public function tampilTipekamar() {
-		$data['dataTipekamar'] = $this->M_master->get_tipe_kamar();
+		$tbl = 'tbl_tipe_kamar';
+		$orderby = 'id ASC';
+		$data['dataTipekamar'] = $this->M_master->get($tbl, $orderby);
 		$this->load->view('master/tipe_kamar/list_data', $data);
 	}
 
@@ -168,9 +174,10 @@ class Master extends AUTH_Controller {
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_tipe_kamar';
 		$data = $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->insertTipekamar($data);
+			$result = $this->M_master->insert($tbl, $data);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -203,9 +210,11 @@ class Master extends AUTH_Controller {
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_tipe_kamar';
 		$data = $this->input->post();
+		$id = $this->input->post('id');
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->updateTipekamar($data);
+			$result = $this->M_master->update($tbl, $data, $id);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -223,8 +232,9 @@ class Master extends AUTH_Controller {
 	}
 
 	public function deleteTipekamar() {
+		$tbl = 'tbl_tipe_kamar';
 		$id = $_POST['id'];
-		$result = $this->M_master->deleteTipekamar($id);
+		$result = $this->M_master->delete($tbl, $id);
 
 		if ($result > 0) {
 			echo show_succ_msg('Data Tipe Kamar Berhasil dihapus', '20px');
@@ -247,7 +257,9 @@ class Master extends AUTH_Controller {
 	}
 
 	public function tampilTipehiburan() {
-		$data['dataTipehiburan'] = $this->M_master->get_tipe_hiburan();
+		$tbl = 'tbl_tipe_hiburan';
+		$orderby = 'id ASC';
+		$data['dataTipehiburan'] = $this->M_master->get($tbl, $orderby);
 		$this->load->view('master/tipe_hiburan/list_data', $data);
 	}
 
@@ -259,9 +271,10 @@ class Master extends AUTH_Controller {
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_tipe_hiburan';
 		$data = $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->insertTipehiburan($data);
+			$result = $this->M_master->insert($tbl, $data);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -295,9 +308,11 @@ class Master extends AUTH_Controller {
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_tipe_hiburan';
 		$data = $this->input->post();
+		$id = $this->input->post('id');
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->updateTipehiburan($data);
+			$result = $this->M_master->update($tbl, $data, $id);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -315,8 +330,9 @@ class Master extends AUTH_Controller {
 	}
 
 	public function deleteTipehiburan() {
+		$tbl = 'tbl_tipe_hiburan';
 		$id = $_POST['id'];
-		$result = $this->M_master->deleteTipehiburan($id);
+		$result = $this->M_master->delete($tbl, $id);
 
 		if ($result > 0) {
 			echo show_succ_msg('Data Tipe Hiburan Berhasil dihapus', '20px');
@@ -339,7 +355,9 @@ class Master extends AUTH_Controller {
 	}
 
 	public function tampilJenisreklame() {
-		$data['dataJenisreklame'] = $this->M_master->get_jenis_reklame();
+		$tbl = 'tbl_jenis_reklame';
+		$orderby = 'id ASC';
+		$data['dataJenisreklame'] = $this->M_master->get($tbl, $orderby);
 		$this->load->view('master/jenis_reklame/list_data', $data);
 	}
 
@@ -350,9 +368,10 @@ class Master extends AUTH_Controller {
 		$this->form_validation->set_rules('indeks_2', 'Indeks II', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_jenis_reklame';
 		$data = $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->insertJenisreklame($data);
+			$result = $this->M_master->insert($tbl, $data);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -385,9 +404,11 @@ class Master extends AUTH_Controller {
 		$this->form_validation->set_rules('indeks_2', 'Indeks II', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_jenis_reklame';
 		$data = $this->input->post();
+		$id = $this->input->post('id');
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->updateJenisreklame($data);
+			$result = $this->M_master->update($tbl, $data, $id);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -405,8 +426,9 @@ class Master extends AUTH_Controller {
 	}
 
 	public function deleteJenisreklame() {
+		$tbl = 'tbl_jenis_reklame';
 		$id = $_POST['id'];
-		$result = $this->M_master->deleteJenisreklame($id);
+		$result = $this->M_master->delete($tbl, $id);
 
 		if ($result > 0) {
 			echo show_succ_msg('Data Jenis Reklame Berhasil dihapus', '20px');
@@ -430,7 +452,9 @@ class Master extends AUTH_Controller {
 	}
 
 	public function tampilJenis() {
-		$data['dataJenis'] = $this->M_master->get_jenis();
+		$tbl = 'tbl_jenis';
+		$orderby = 'id ASC';
+		$data['dataJenis'] = $this->M_master->get($tbl, $orderby);
 		$this->load->view('master/jenis/list_data', $data);
 	}
 
@@ -439,9 +463,10 @@ class Master extends AUTH_Controller {
 		$this->form_validation->set_rules('id_kategori', 'Kategori', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_jenis';
 		$data = $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->insertJenis($data);
+			$result = $this->M_master->insert($tbl, $data);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -473,9 +498,11 @@ class Master extends AUTH_Controller {
 		$this->form_validation->set_rules('id_kategori', 'Kategori', 'trim|required');
 		$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
+		$tbl = 'tbl_jenis';
 		$data = $this->input->post();
+		$id = $this->input->post('id');
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_master->updateJenis($data);
+			$result = $this->M_master->update($tbl, $data, $id);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -493,8 +520,9 @@ class Master extends AUTH_Controller {
 	}
 
 	public function deleteJenis() {
+		$tbl = 'tbl_jenis';
 		$id = $_POST['id'];
-		$result = $this->M_master->deleteJenis($id);
+		$result = $this->M_master->delete($tbl, $id);
 
 		if ($result > 0) {
 			echo show_succ_msg('Data Jenis Berhasil dihapus', '20px');
