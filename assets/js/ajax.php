@@ -21,6 +21,7 @@
 		tampilStatuskepemilikan();
 		tampilStatususaha();
 		tampilPerusahaan();
+		tampilIzin_usaha();
 
 		// pendataan
 		tampilHotel();
@@ -1413,6 +1414,15 @@
 	$('#update-perusahaan').on('hidden.bs.modal', function () {
 		$('.form-msg').html('');
 	})
+
+	// Perusahaan
+	function tampilIzin_usaha() {
+		$.get('<?php echo base_url('izin_usaha/tampilIzin_usaha'); ?>', function(data) {
+			MyTable.fnDestroy();
+			$('#data-izin_usaha').html(data);
+			refresh();
+		});
+	}
 
 	// --------------------- pendataan -----------------------
 	function tampilHotel() {

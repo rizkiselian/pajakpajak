@@ -84,7 +84,7 @@
             <a href="<?php echo base_url(); ?>Perusahaan/"><i class="fa fa-angle-right"></i> Perusahaan</a>
           </li>
           <li <?php if($subpage=='Izin Usaha'){echo "class=\"active\"";} ?>>
-            <a href="<?php echo base_url(); ?>izin-usaha"><i class="fa fa-angle-right"></i> Izin Usaha</a>
+            <a href="<?php echo base_url(); ?>Izin_usaha"><i class="fa fa-angle-right"></i> Izin Usaha</a>
           </li>
           <li <?php if($subpage=='WPP'){echo "class=\"active\"";} ?>>
             <a href="<?php echo base_url(); ?>wpp"><i class="fa fa-angle-right"></i> Wajib Pajak Perorangan</a>

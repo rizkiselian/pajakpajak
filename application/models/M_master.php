@@ -71,6 +71,16 @@ class M_master extends CI_Model {
 
 	}
 
+	public function get_izin_usaha(){
+		$this->db->select('*');
+		$this->db->from('tbl_izin_usaha');
+		// $this->db->where("npwpd", $npwpd);
+		$this->db->order_by('id DESC');
+		$query = $this->db->get();
+		return $query->result_array();
+
+	}
+
 	public function get_jenis() {
 		$this->db->select('tj.*, tk.nama_kategori');
 		$this->db->from('tbl_jenis tj');
@@ -101,7 +111,7 @@ class M_master extends CI_Model {
 
 	// public function insert_batch($data) {
 	// 	$this->db->insert_batch('pegawai', $data);
-		
+
 	// 	return $this->db->affected_rows();
 	// }
 

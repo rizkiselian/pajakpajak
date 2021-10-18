@@ -14,9 +14,9 @@ $route['jenis-reklame'] = 'master/jenisreklame/';
 $route['jenis'] = 'master/jenis/';
 $route['status-kepemilikan'] = 'master/statuskepemilikan/';
 $route['status-usaha'] = 'master/statususaha/';
-$route['perusahaan'] = 'master/perusahaan/';
-$route['izin-usaha'] = 'master/izinusaha/';
-$route['wpp'] = 'master/wpp/';
+// $route['perusahaan'] = 'master/perusahaan/';
+$route['izin-usaha'] = 'Izin_usaha/';
+// $route['wpp'] = 'master/wpp/';
 
 $route['pendataan-hotel'] = 'pendataan/hotel/';
 $route['pendataan-hotel-detail/([.0-9a-zA-Z-]+)'] = 'pendataan/detail_hotel/$1';
